@@ -28,40 +28,61 @@
             </a>
           </li>
           <li>
-            <a href="https://blog.csdn.net/qq_37504376">
+            <a href="https://blog.csdn.net/qq_37504376" target="_blank">
               <img src="./assets/image/app/csdn.png" alt />
             </a>
           </li>
           <li>
-            <a href="https://github.com/cz6oy">
+            <a href="https://github.com/cz6oy" target="_blank">
               <img src="./assets/image/app/githubb.png" alt />
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="https://weibo.com/6226694438" target="_blank">
               <img src="./assets/image/app/weibo.png" alt />
             </a>
           </li>
         </ul>
       </div>
-      <!-- 导航栏 -->
+      <!-- 左侧导航栏 -->
       <div class="my-nav">
         <ul>
-          <li :style="{color:active}">
-            <span class="glyphicon glyphicon-home"></span>&nbsp;
-            Blog Home
+          <li>
+            <router-link to :style="{color:active}">
+              <span class="glyphicon glyphicon-home"></span>&nbsp;
+              <strong>Blog Home</strong>
+            </router-link>
           </li>
           <li>
-            <span class="glyphicon glyphicon-bookmark"></span>&nbsp;
-            Blog Post
+            <router-link to>
+              <span class="glyphicon glyphicon-bookmark"></span>&nbsp;
+              <strong>Blog Post</strong>
+            </router-link>
           </li>
           <li>
-            <span class="glyphicon glyphicon-user"></span>&nbsp;
-            About Me
+            <router-link to>
+              <span class="glyphicon glyphicon-user"></span>&nbsp;
+              <strong>My Journal</strong>
+            </router-link>
           </li>
         </ul>
       </div>
     </div>
+    <!-- 右边上部盒子 -->
+    <div class="right-top-box">
+      <div class="title">Hello！ Guys Welcome To Czboy's Personal Blog</div>
+      <p>Welcome to my blog. Subscribe and get my latest blog post in your inbox.</p>
+      <form>
+        <div class="form-group">
+          <input type="text" placeholder="Enter email" />
+        </div>
+        <button type="button" :style="{backgroundColor:activeColor,borderColor:activeColor}" @click="btnEmail()">Subscribe</button>
+      </form>
+    </div>
+    <!-- 右边下部盒子 -->
+    <div class="right-bottom-box"></div>
+    <!-- 路由页面 -->
+    <router-view class="router-view" />
   </div>
 </template>
 
@@ -69,11 +90,14 @@
 export default {
   data() {
     return {
-      activeColor: '',
-      active:'#fff'
+      activeColor: "",
+      active: "rgba(0,0,0,0.5)"
     };
   },
   methods: {
+    btnEmail:function(){
+      alert("暂未开通邮箱订阅，敬请期待！");
+    },
     // 随机背景颜色
     randomBgColor: function() {
       var arr = [
@@ -88,7 +112,6 @@ export default {
       ];
       var random = Math.floor(Math.random() * arr.length);
       this.activeColor = arr[random];
-      this.active = "rgba(0,0,0,0.5)";
     }
   },
   mounted: function() {
@@ -106,6 +129,7 @@ ul li {
   list-style: none;
 }
 .left-box {
+  float: left;
   width: 307px;
   height: 100vh;
   background-color: #5bc3d5;
@@ -123,11 +147,11 @@ ul li {
     margin: 60px auto 0px auto;
     width: 170px;
     height: 170px;
-    background-color: #fff;
+    // background-color: #fff;
     border-radius: 50%;
 
     img {
-      position:absolute;
+      position: absolute;
       top: 2px;
       left: 2px;
       width: 165px;
@@ -147,7 +171,7 @@ ul li {
   }
   .my-blog {
     padding: 0px 30px;
-    margin:30px 0px 100px 0px;
+    margin: 30px 0px 100px 0px;
     // height: 30px;
     background-color: #fff;
     ul li {
@@ -157,8 +181,8 @@ ul li {
       a > img {
         margin: 0px auto;
         display: inline-block;
-        width: 35px;
-        height: 35px;
+        width: 32px;
+        height: 32px;
       }
     }
   }
@@ -169,21 +193,88 @@ ul li {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     ul {
       li {
-        padding-top: 10px;
+        padding-top: 15px;
         padding-left: 70px;
         width: 100%;
         height: 45px;
-        font-size: 17px;
         font-weight: bold;
         line-height: 45px;
         text-align: left;
-        color:#fff;
-        cursor: pointer;
+        a {
+          font-size: 15px;
+          color: rgba(255, 255, 255, 0.8);
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+            "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+            "Noto Color Emoji";
+        }
+        a:hover {
+          color: rgba(0, 0, 0, 0.5);
+        }
       }
-      li:hover{
-        color: rgba(0,0,0,0.5);
-        text-decoration: underline;
+    }
+  }
+}
+.right-top-box {
+  padding-left: 307px;
+  height: 230px;
+  background-color: #fafafa !important;
+  .title {
+    padding-top: 47px;
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+      "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+  p {
+    padding-top: 5px;
+    font-weight: 400;
+    font-size: 16px;
+    text-align: center;
+    color: #4f4f4f;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+      "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+  form {
+    margin: 0px auto;
+    padding-top: 5px;
+    width: 700px;
+    .form-group {
+      margin-left: 113px;
+      display: inline-block;
+      width: 360px;
+      height: 44px;
+      border: 1px solid #c2c2c2;
+      border-radius: 5px;
+      background-color: #fff;
+      input {
+        margin-left: 1px;
+        padding-left: 13px;
+        width: 98%;
+        height: 98%;
+        border: 0px;
+        font-size: 16px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        border-radius: 2%;
+        outline: none;
       }
+    }
+    button {
+      display: inline-block;
+      margin-left: 4px;
+      width: 107px;
+      height: 44px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 5px;
+      border: 0px;
     }
   }
 }
