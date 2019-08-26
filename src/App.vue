@@ -112,6 +112,7 @@ export default {
       ];
       var random = Math.floor(Math.random() * arr.length);
       this.activeColor = arr[random];
+
     }
   },
   mounted: function() {
@@ -147,7 +148,6 @@ ul li {
     margin: 60px auto 0px auto;
     width: 170px;
     height: 170px;
-    // background-color: #fff;
     border-radius: 50%;
 
     img {
