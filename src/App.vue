@@ -4,7 +4,7 @@
     <div class="left-box" :style="{backgroundColor:activeColor}">
       <div class="left-box-title">Czboy's Blog</div>
       <div class="my-head">
-        <img src="./assets/image/app/mehead.jpg" alt />
+        <img src="./assets/image/app/mehead.jpg" alt="我的自拍" />
         <!-- <img src="./assets/image/app/psb.jpg" alt /> -->
       </div>
       <div class="my-desc">
@@ -19,27 +19,27 @@
         <ul>
           <li>
             <a href="#">
-              <img src="./assets/image/app/twitter43.png" alt />
+              <img src="./assets/image/app/twitter43.png" alt="推特" title="推特" />
             </a>
           </li>
           <li>
             <a href="#">
-              <img src="./assets/image/app/facebook.png" alt />
+              <img src="./assets/image/app/facebook.png" alt="脸书" title="脸书" />
             </a>
           </li>
           <li>
             <a href="https://blog.csdn.net/qq_37504376" target="_blank">
-              <img src="./assets/image/app/csdn.png" alt />
+              <img src="./assets/image/app/csdn.png" alt="CSDN" title="CSDN" />
             </a>
           </li>
           <li>
             <a href="https://github.com/cz6oy" target="_blank">
-              <img src="./assets/image/app/githubb.png" alt />
+              <img src="./assets/image/app/githubb.png" alt="github" title="github" />
             </a>
           </li>
           <li>
             <a href="https://weibo.com/6226694438" target="_blank">
-              <img src="./assets/image/app/weibo.png" alt />
+              <img src="./assets/image/app/weibo.png" alt="微博" title="微博" />
             </a>
           </li>
         </ul>
@@ -48,41 +48,77 @@
       <div class="my-nav">
         <ul>
           <li>
-            <router-link to :style="{color:active}">
+            <a href="#" @click="goPage('home')" :style="{color:active}">
               <span class="glyphicon glyphicon-home"></span>&nbsp;
               <strong>Blog Home</strong>
-            </router-link>
+            </a>
           </li>
           <li>
-            <router-link to>
+            <a href="#" >
               <span class="glyphicon glyphicon-bookmark"></span>&nbsp;
               <strong>Blog Post</strong>
-            </router-link>
+            </a>
           </li>
           <li>
-            <router-link to>
+            <a href="#" >
               <span class="glyphicon glyphicon-user"></span>&nbsp;
               <strong>My Journal</strong>
-            </router-link>
+            </a>
           </li>
         </ul>
       </div>
     </div>
     <!-- 右边上部盒子 -->
-    <div class="right-top-box">
+    <div class="right-top-box" v-show="isShowHomePage">
       <div class="title">Hello！ Guys Welcome To Czboy's Personal Blog</div>
       <p>Welcome to my blog. Subscribe and get my latest blog post in your inbox.</p>
       <form>
         <div class="form-group">
           <input type="text" placeholder="Enter email" />
         </div>
-        <button type="button" :style="{backgroundColor:activeColor,borderColor:activeColor}" @click="btnEmail()">Subscribe</button>
+        <button
+          type="button"
+          :style="{backgroundColor:activeColor,borderColor:activeColor}"
+          @click="btnEmail()"
+        >Subscribe</button>
       </form>
     </div>
     <!-- 右边下部盒子 -->
-    <div class="right-bottom-box"></div>
+    <div class="right-bottom-box" v-show="isShowHomePage"></div>
+
     <!-- 路由页面 -->
-    <router-view class="router-view" />
+    <router-view class="router-view"/>
+
+        <!-- 尾部盒子 -->
+    <div class="footer">
+      <p>Copyright © 2019.Company name All rights reserved</p>
+    </div>
+
+    <!-- 右侧悬浮导航栏 -->
+    <div class="slide" :style="{backgroundColor:activeColor}">
+      <ul class="icon">
+        <li>
+          <a href="#" @click="goPage('web')">
+            <img src="./assets/image/app/h5.png" alt="Web前端" title="Web前端" />
+          </a>
+        </li>
+        <li>
+          <a href="#" @click="goPage('java')">
+            <img src="./assets/image/app/java (1).png" alt="Java" title="Java" />
+          </a>
+        </li>
+        <li>
+          <a href="#" @click="goPage('python')">
+            <img src="./assets/image/app/python (1).png" alt="Python" title="Python" />
+          </a>
+        </li>
+        <li>
+          <a href="#" @click="goPage('bigdata')">
+            <img src="./assets/image/app/bigdata.png" alt="大数据" title="大数据" />
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -91,11 +127,30 @@ export default {
   data() {
     return {
       activeColor: "",
-      active: "rgba(0,0,0,0.5)"
+      active: "rgba(0,0,0,0.5)",
+      isShowHomePage: true
     };
   },
   methods: {
-    btnEmail:function(){
+    goPage: function(val) {
+      console.log(val);
+      if (val == "home") {
+        this.isShowHomePage = true;
+        this.active = "rgba(0,0,0,0.5)";
+        return;
+      } else if (val == "python") {
+        this.$router.push({ name: "python" });
+      } else if (val == "web") {
+        this.$router.push({ name: "web" });
+      } else if (val == 'bigdata') {
+        this.$router.push({ name: "bigdata" });
+      } else if (val == 'java') {
+        this.$router.push({ name: "java" });
+      }
+      this.isShowHomePage = false;
+      this.active = "rgba(255, 255, 255, 0.8)";
+    },
+    btnEmail: function() {
       alert("暂未开通邮箱订阅，敬请期待！");
     },
     // 随机背景颜色
@@ -112,7 +167,6 @@ export default {
       ];
       var random = Math.floor(Math.random() * arr.length);
       this.activeColor = arr[random];
-
     }
   },
   mounted: function() {
@@ -183,6 +237,10 @@ ul li {
         display: inline-block;
         width: 32px;
         height: 32px;
+      }
+      img:hover {
+        filter: alpha(Opacity=80);
+        opacity: 0.8;
       }
     }
   }
@@ -277,5 +335,44 @@ ul li {
       border: 0px;
     }
   }
+}
+.slide {
+  width: 50px;
+  height: 250px;
+  position: fixed;
+  top: 50%;
+  right: 0;
+  margin-top: -125px;
+  border-radius: 5px 0 0 5px;
+  z-index: 999;
+  ul {
+    display: block;
+    padding-top: 34px;
+    li {
+      width: 50px;
+      height: 50px;
+      img {
+        margin: 0px auto;
+        display: block;
+        width: 35px;
+        height: 35px;
+      }
+      img:hover {
+        filter: alpha(Opacity=80);
+        opacity: 0.8;
+      }
+    }
+  }
+}
+.footer{
+  color: rgba(255,255,255,0.7);
+  height:45px;
+  text-align: center;
+  line-height: 45px;
+  background: #223142 !important;
+}
+.router-view {
+  padding-left: 307px;
+  background-color: #fff !important;
 }
 </style>
