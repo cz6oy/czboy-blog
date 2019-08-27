@@ -9,9 +9,9 @@
       </div>
       <div class="my-desc">
         <p>
-          czboy（长治男孩）、95后一枚、
+          czboy（长治男孩）、95后一枚
           <br />&nbsp;&nbsp;&nbsp;非科班程序员，专注java、
-          Go、python、web前端、大数据方向。
+          python、web前端、大数据方向
         </p>
       </div>
       <!-- icon -->
@@ -54,15 +54,15 @@
             </a>
           </li>
           <li>
-            <a href="#" >
+            <a href="#">
               <span class="glyphicon glyphicon-bookmark"></span>&nbsp;
               <strong>Blog Post</strong>
             </a>
           </li>
           <li>
-            <a href="#" >
+            <a href="#">
               <span class="glyphicon glyphicon-user"></span>&nbsp;
-              <strong>My Journal</strong>
+              <strong>About Me</strong>
             </a>
           </li>
         </ul>
@@ -83,46 +83,55 @@
         >Subscribe</button>
       </form>
     </div>
+    
     <!-- 右边下部盒子 -->
     <div class="right-bottom-box" v-show="isShowHomePage"></div>
 
-    <!-- 路由页面 -->
-    <router-view class="router-view"/>
-
-        <!-- 尾部盒子 -->
-    <div class="footer">
-      <p>Copyright © 2019.Company name All rights reserved</p>
-    </div>
+    <!-- 展示六条信息 -->
+    <hotArticle v-show="isShowHomePage"></hotArticle>
 
     <!-- 右侧悬浮导航栏 -->
-    <div class="slide" :style="{backgroundColor:activeColor}">
-      <ul class="icon">
-        <li>
-          <a href="#" @click="goPage('web')">
-            <img src="./assets/image/app/h5.png" alt="Web前端" title="Web前端" />
-          </a>
-        </li>
-        <li>
-          <a href="#" @click="goPage('java')">
-            <img src="./assets/image/app/java (1).png" alt="Java" title="Java" />
-          </a>
-        </li>
-        <li>
-          <a href="#" @click="goPage('python')">
-            <img src="./assets/image/app/python (1).png" alt="Python" title="Python" />
-          </a>
-        </li>
-        <li>
-          <a href="#" @click="goPage('bigdata')">
-            <img src="./assets/image/app/bigdata.png" alt="大数据" title="大数据" />
-          </a>
-        </li>
-      </ul>
+     <div class="slide" :style="{backgroundColor:activeColor}">
+    <ul class="icon">
+      <li>
+        <a href="#" @click="goPage('web')">
+          <img src="./assets/image/app/h5.png" alt="Web前端" title="Web前端" />
+        </a>
+      </li>
+      <li>
+        <a href="#" @click="goPage('java')">
+          <img src="./assets/image/app/java (1).png" alt="Java" title="Java" />
+        </a>
+      </li>
+      <li>
+        <a href="#" @click="goPage('python')">
+          <img src="./assets/image/app/python (1).png" alt="Python" title="Python" />
+        </a>
+      </li>
+      <li>
+        <a href="#" @click="goPage('bigdata')">
+          <img src="./assets/image/app/bigdata.png" alt="大数据" title="大数据" />
+        </a>
+      </li>
+    </ul>
+  </div>
+    
+    <!-- 路由页面 -->
+    <router-view class="router-view" />
+
+    <!-- 尾部盒子 -->
+    <div class="footer">
+      <div>Copyright © 2019.Company name All rights reserved</div>
     </div>
   </div>
 </template>
 
+
+
 <script>
+
+import hotArticle from './components/HotArticle.vue';
+
 export default {
   data() {
     return {
@@ -131,10 +140,14 @@ export default {
       isShowHomePage: true
     };
   },
+  components: {
+    hotArticle
+  },
   methods: {
     goPage: function(val) {
       console.log(val);
       if (val == "home") {
+        window.location = 'http://localhost:8080/';
         this.isShowHomePage = true;
         this.active = "rgba(0,0,0,0.5)";
         return;
@@ -142,9 +155,9 @@ export default {
         this.$router.push({ name: "python" });
       } else if (val == "web") {
         this.$router.push({ name: "web" });
-      } else if (val == 'bigdata') {
+      } else if (val == "bigdata") {
         this.$router.push({ name: "bigdata" });
-      } else if (val == 'java') {
+      } else if (val == "java") {
         this.$router.push({ name: "java" });
       }
       this.isShowHomePage = false;
@@ -176,203 +189,5 @@ export default {
 </script>
 
 <style lang="less">
-* {
-  margin: 0px;
-  padding: 0px;
-}
-ul li {
-  list-style: none;
-}
-.left-box {
-  float: left;
-  width: 307px;
-  height: 100vh;
-  background-color: #5bc3d5;
-  .left-box-title {
-    padding-top: 28px;
-    font-weight: bold;
-    font-size: 25px;
-    line-height: 30px;
-    height: 30px;
-    text-align: center;
-    color: rgb(255, 255, 255);
-  }
-  .my-head {
-    position: relative;
-    margin: 60px auto 0px auto;
-    width: 170px;
-    height: 170px;
-    border-radius: 50%;
-
-    img {
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 165px;
-      height: 165px;
-      border-radius: 50%;
-    }
-  }
-  .my-desc {
-    padding: 25px 20px;
-    height: 100px;
-    text-align: center;
-    color: #fff;
-    font-size: 13px;
-    p {
-      line-height: 20px;
-    }
-  }
-  .my-blog {
-    padding: 0px 30px;
-    margin: 30px 0px 100px 0px;
-    // height: 30px;
-    background-color: #fff;
-    ul li {
-      float: left;
-      width: 20%;
-      height: 31px;
-      a > img {
-        margin: 0px auto;
-        display: inline-block;
-        width: 32px;
-        height: 32px;
-      }
-      img:hover {
-        filter: alpha(Opacity=80);
-        opacity: 0.8;
-      }
-    }
-  }
-  .my-nav {
-    width: 100%;
-    // height: 100px;
-    padding: 0px 20px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    ul {
-      li {
-        padding-top: 15px;
-        padding-left: 70px;
-        width: 100%;
-        height: 45px;
-        font-weight: bold;
-        line-height: 45px;
-        text-align: left;
-        a {
-          font-size: 15px;
-          color: rgba(255, 255, 255, 0.8);
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-            "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-            "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-            "Noto Color Emoji";
-        }
-        a:hover {
-          color: rgba(0, 0, 0, 0.5);
-        }
-      }
-    }
-  }
-}
-.right-top-box {
-  padding-left: 307px;
-  height: 230px;
-  background-color: #fafafa !important;
-  .title {
-    padding-top: 47px;
-    width: 100%;
-    text-align: center;
-    font-size: 32px;
-    font-weight: 700;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-      "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  }
-  p {
-    padding-top: 5px;
-    font-weight: 400;
-    font-size: 16px;
-    text-align: center;
-    color: #4f4f4f;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-      "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  }
-  form {
-    margin: 0px auto;
-    padding-top: 5px;
-    width: 700px;
-    .form-group {
-      margin-left: 113px;
-      display: inline-block;
-      width: 360px;
-      height: 44px;
-      border: 1px solid #c2c2c2;
-      border-radius: 5px;
-      background-color: #fff;
-      input {
-        margin-left: 1px;
-        padding-left: 13px;
-        width: 98%;
-        height: 98%;
-        border: 0px;
-        font-size: 16px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-        border-radius: 2%;
-        outline: none;
-      }
-    }
-    button {
-      display: inline-block;
-      margin-left: 4px;
-      width: 107px;
-      height: 44px;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 700;
-      border-radius: 5px;
-      border: 0px;
-    }
-  }
-}
-.slide {
-  width: 50px;
-  height: 250px;
-  position: fixed;
-  top: 50%;
-  right: 0;
-  margin-top: -125px;
-  border-radius: 5px 0 0 5px;
-  z-index: 999;
-  ul {
-    display: block;
-    padding-top: 34px;
-    li {
-      width: 50px;
-      height: 50px;
-      img {
-        margin: 0px auto;
-        display: block;
-        width: 35px;
-        height: 35px;
-      }
-      img:hover {
-        filter: alpha(Opacity=80);
-        opacity: 0.8;
-      }
-    }
-  }
-}
-.footer{
-  color: rgba(255,255,255,0.7);
-  height:45px;
-  text-align: center;
-  line-height: 45px;
-  background: #223142 !important;
-}
-.router-view {
-  padding-left: 307px;
-  background-color: #fff !important;
-}
+  @import "./assets/css/app.less";
 </style>
