@@ -25,5 +25,8 @@ npm run test
 npm run lint
 ```
 
+### SQL
+https://gitee.com/gitsxboy/czboy-blog/wikis/SQL%E6%96%87%E4%BB%B6
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
