@@ -26,7 +26,7 @@ npm run lint
 ```
 
 ### SQL
-https://gitee.com/gitsxboy/czboy-blog/wikis/SQL%E6%96%87%E4%BB%B6
+https://github.com/cz6oy/czboy-blog/wiki/SQL%E8%AF%AD%E5%8F%A5
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
