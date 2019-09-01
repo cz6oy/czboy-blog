@@ -88,7 +88,7 @@
     <div class="right-bottom-box" v-if="isShowHomePage"></div>
 
     <!-- 展示六条信息 -->
-    <hotArticle v-if="isShowHomePage"></hotArticle>
+    <hotArticle v-if="isShowHomePage" :psMsg="items"></hotArticle>
 
     <!-- 右侧悬浮导航栏 -->
     <div class="slide" :style="{backgroundColor:activeColor}">
@@ -136,7 +136,8 @@ export default {
     return {
       activeColor: "",
       active: "rgba(0,0,0,0.5)",
-      isShowHomePage: true
+      isShowHomePage: true,
+      items:[]
     };
   },
   components: {
@@ -181,12 +182,13 @@ export default {
       this.activeColor = arr[random];
     },
     initLoadData: function() {
+      var that = this;
       axios({
         method: "GET",
-        url: "http://localhost:8080/czboy/article/",
+        url: "http://localhost:8989/czboy/article/",
       })
-      .then(function(response) {
-        console.log(response);
+      .then(function(res) {
+        that.items = res.data;
       })
       .catch(function(error) {
         console.log(error);
