@@ -85,31 +85,31 @@
     </div>
 
     <!-- 右边下部盒子 -->
-    <div class="right-bottom-box" v-if="isShowHomePage"></div>
+    <!-- <div class="right-bottom-box" v-if="isShowHomePage"></div> -->
 
     <!-- 展示六条信息 -->
-    <hotArticle v-if="isShowHomePage" :psMsg="items"></hotArticle>
+    <hotArticle v-if="isShowHomePage" :psMsg="items" @change="queryArticleDetails"></hotArticle>
 
     <!-- 右侧悬浮导航栏 -->
     <div class="slide" :style="{backgroundColor:activeColor}">
       <ul class="icon">
         <li>
-          <a href="#" @click="goPage('web')">
+          <a href="#" @click="goPage('2')">
             <img src="./assets/image/app/h5.png" alt="Web前端" title="Web前端" />
           </a>
         </li>
         <li>
-          <a href="#" @click="goPage('java')">
+          <a href="#" @click="goPage('1')">
             <img src="./assets/image/app/java (1).png" alt="Java" title="Java" />
           </a>
         </li>
         <li>
-          <a href="#" @click="goPage('python')">
+          <a href="#" @click="goPage('3')">
             <img src="./assets/image/app/python (1).png" alt="Python" title="Python" />
           </a>
         </li>
         <li>
-          <a href="#" @click="goPage('bigdata')">
+          <a href="#" @click="goPage('4')">
             <img src="./assets/image/app/bigdata.png" alt="大数据" title="大数据" />
           </a>
         </li>
@@ -137,31 +137,50 @@ export default {
       activeColor: "",
       active: "rgba(0,0,0,0.5)",
       isShowHomePage: true,
-      items:[]
+      items: []
     };
   },
   components: {
     hotArticle
   },
   methods: {
+    //查询指定文章类别
+    queryTypeArticle: function(type) {
+      var that = this;
+      axios({
+        method: "GET",
+        url: "http://localhost:8989/czboy/article/type/" + type
+      })
+        .then(function(res) {
+          that.items = res.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    //查询文章详情
+    queryArticleDetails: function(id) {
+      this.isShowHomePage = false;
+      var that = this;
+      axios({
+        method: "GET",
+        url: "http://localhost:8989/czboy/article/" + id
+      })
+        .then(function(res) {
+          console.log(res);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     goPage: function(val) {
-      console.log(val);
+      this.isShowHomePage = true;
       if (val == "home") {
-        window.location = "http://localhost:8080/";
-        this.isShowHomePage = true;
+        this.initLoadData();
         this.active = "rgba(0,0,0,0.5)";
         return;
-      } else if (val == "python") {
-        this.$router.push({ name: "python" });
-      } else if (val == "web") {
-        this.$router.push({ name: "web" });
-      } else if (val == "bigdata") {
-        this.$router.push({ name: "bigdata" });
-      } else if (val == "java") {
-        this.$router.push({ name: "java" });
       }
-      this.isShowHomePage = false;
-      this.active = "rgba(255, 255, 255, 0.8)";
+      this.queryTypeArticle(val);
     },
     btnEmail: function() {
       alert("暂未开通邮箱订阅，敬请期待！");
@@ -185,14 +204,14 @@ export default {
       var that = this;
       axios({
         method: "GET",
-        url: "http://localhost:8989/czboy/article/",
+        url: "http://localhost:8989/czboy/article/"
       })
-      .then(function(res) {
-        that.items = res.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+        .then(function(res) {
+          that.items = res.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     //初始化
     init: function() {
