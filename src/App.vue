@@ -90,6 +90,9 @@
     <!-- 展示六条信息 -->
     <hotArticle v-if="isShowHomePage" :psMsg="items" @change="queryArticleDetails"></hotArticle>
 
+    <!-- 文章详情 -->
+    <articleDetails v-if="isShowArticleDetails"></articleDetails>>
+
     <!-- 右侧悬浮导航栏 -->
     <div class="slide" :style="{backgroundColor:activeColor}">
       <ul class="icon">
@@ -130,6 +133,8 @@
 
 <script>
 import hotArticle from "./components/HotArticle.vue";
+import articleDetails from "./components/ArticleDetails.vue";
+
 
 export default {
   data() {
@@ -137,11 +142,13 @@ export default {
       activeColor: "",
       active: "rgba(0,0,0,0.5)",
       isShowHomePage: true,
+      isShowArticleDetails:false,
       items: []
     };
   },
   components: {
-    hotArticle
+    hotArticle,
+    articleDetails
   },
   methods: {
     //查询指定文章类别
@@ -161,6 +168,7 @@ export default {
     //查询文章详情
     queryArticleDetails: function(id) {
       this.isShowHomePage = false;
+      this.isShowArticleDetails = true;
       var that = this;
       axios({
         method: "GET",
