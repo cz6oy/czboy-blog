@@ -143,7 +143,7 @@ export default {
       active: "rgba(0,0,0,0.5)",
       isShowHomePage: true,
       isShowArticleDetails:false,
-      items: []
+      items: [],
     };
   },
   components: {
