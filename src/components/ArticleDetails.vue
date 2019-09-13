@@ -7,7 +7,7 @@
         <span>阅读数 198</span>
       </div>
       <div id="id">
-     
+        
       </div>
     </div>
   </div>
@@ -16,11 +16,14 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+     
+    };
   },
+   props:['psMsg'],
   mounted: function() {
     let converter = new showdown.Converter();
-    let html = converter.makeHtml("@[TOC](目录)");
+    let html = converter.makeHtml(this.psMsg.content);
     document.getElementById('id').innerHTML = html;
   }
 };

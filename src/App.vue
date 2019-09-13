@@ -91,7 +91,7 @@
     <hotArticle v-if="isShowHomePage" :psMsg="items" @change="queryArticleDetails"></hotArticle>
 
     <!-- 文章详情 -->
-    <articleDetails v-if="isShowArticleDetails"></articleDetails>>
+    <articleDetails v-if="isShowArticleDetails" :psMsg="articleInfo"></articleDetails>>
 
     <!-- 右侧悬浮导航栏 -->
     <div class="slide" :style="{backgroundColor:activeColor}">
@@ -144,6 +144,7 @@ export default {
       isShowHomePage: true,
       isShowArticleDetails:false,
       items: [],
+      articleInfo:{}
     };
   },
   components: {
@@ -175,7 +176,8 @@ export default {
         url: "http://localhost:8989/czboy/article/" + id
       })
         .then(function(res) {
-          console.log(res);
+          console.log("=========================",res);
+          that.articleInfo = res.data;
         })
         .catch(function(error) {
           console.log(error);
