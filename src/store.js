@@ -3,14 +3,33 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
+const state = {
+  articleTitle:null,
+  articleCreTime:null,
+  articleHotValue:null,
+  articleContent:null
+}
 
+const mutations = {
+  articleTitle:function(state,extra){
+    state.articleTitle = extra;
   },
-  mutations: {
-
+  articleCreTime:function(state,extra){
+    state.articleCreTime = extra;
   },
-  actions: {
-
+  articleHotValue:function(state,extra){
+    state.articleHotValue = extra;
+  },
+  articleContent:function(state,extra){
+    state.articleContent = extra;
   }
+}
+
+const actions = {
+
+}
+
+export default new Vuex.Store({
+  state,
+  mutations,
 })

@@ -84,14 +84,40 @@
       </form>
     </div>
 
-    <!-- 右边下部盒子 -->
-    <!-- <div class="right-bottom-box" v-if="isShowHomePage"></div> -->
-
     <!-- 展示六条信息 -->
-    <hotArticle v-if="isShowHomePage" :psMsg="items" @change="queryArticleDetails"></hotArticle>
+    <div class="hot-article-box" v-show="isShowHomePage">
+      <div class="content">
+        <div class="media" v-for="article in articlesList">
+          <div class="media-left media-middle">
+            <img
+              class="media-object img-size"
+              @click="queryArticleDetails(article.id)"
+              src="./assets/image/hotArticle/blog-post-thumb-1.jpg"
+              alt="封面"
+            />
+          </div>
+          <div class="media-body">
+            <h4
+              class="media-heading font-size"
+              @click="queryArticleDetails(article.id)"
+            >{{article.title}}</h4>
+            {{article.description}}
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- 文章详情 -->
-    <articleDetails v-if="isShowArticleDetails" :psMsg="articleInfo"></articleDetails>>
+    <div class="layout" v-show="isShowArticleDetails">
+      <div class="content2">
+        <h1>{{title}}</h1>
+        <div class="article-info-box">
+          <span>{{createTime}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+          <span>阅读数 198</span>
+        </div>
+        <div id="id" style="line-height:40px;font-size:16px;"></div>
+      </div>
+    </div>
 
     <!-- 右侧悬浮导航栏 -->
     <div class="slide" :style="{backgroundColor:activeColor}">
@@ -128,28 +154,18 @@
     </div>
   </div>
 </template>
-
-
-
 <script>
-import hotArticle from "./components/HotArticle.vue";
-import articleDetails from "./components/ArticleDetails.vue";
-
-
 export default {
   data() {
     return {
       activeColor: "",
       active: "rgba(0,0,0,0.5)",
       isShowHomePage: true,
-      isShowArticleDetails:false,
-      items: [],
-      articleInfo:{}
+      isShowArticleDetails: false,
+      articlesList: [],
+      title:null,
+      createTime:null
     };
-  },
-  components: {
-    hotArticle,
-    articleDetails
   },
   methods: {
     //查询指定文章类别
@@ -160,7 +176,7 @@ export default {
         url: "http://localhost:8989/czboy/article/type/" + type
       })
         .then(function(res) {
-          that.items = res.data;
+          that.articlesList = res.data;
         })
         .catch(function(error) {
           console.log(error);
@@ -176,14 +192,19 @@ export default {
         url: "http://localhost:8989/czboy/article/" + id
       })
         .then(function(res) {
-          console.log("=========================",res);
-          that.articleInfo = res.data;
+          that.title = res.data.title;
+          that.createTime = res.data.createTime;
+          var converter = new showdown.Converter();
+          var html = converter.makeHtml(res.data.content);
+          document.getElementById("id").innerHTML = html;
         })
         .catch(function(error) {
           console.log(error);
         });
     },
+    //侧边菜单栏
     goPage: function(val) {
+      this.isShowArticleDetails = false;
       this.isShowHomePage = true;
       if (val == "home") {
         this.initLoadData();
@@ -217,7 +238,7 @@ export default {
         url: "http://localhost:8989/czboy/article/"
       })
         .then(function(res) {
-          that.items = res.data;
+          that.articlesList = res.data;
         })
         .catch(function(error) {
           console.log(error);
@@ -237,4 +258,30 @@ export default {
 
 <style lang="less">
 @import "./assets/css/app.less";
+@import "./assets/css/hotArticle.less";
+.layout {
+  padding-left: 280px;
+  height:100vh;
+  .content2 {
+    padding-top: 50px;
+    margin: 0px auto;
+    width: 820px;
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      word-wrap: break-word;
+      font-family: "Microsoft YaHei", "SF Pro Display", Roboto, Noto, Arial,
+        "PingFang SC", sans-serif;
+    }
+    .article-info-box {
+      padding-top: 10px;
+      padding-bottom: 20px;
+      font-size: 14px;
+      font-family: "Microsoft YaHei", "SF Pro Display", Roboto, Noto, Arial,
+        "PingFang SC", sans-serif;
+      color: #858585;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  }
+}
 </style>

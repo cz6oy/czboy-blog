@@ -1,9 +1,9 @@
 <template>
   <div class="layout">
     <div class="content">
-      <h1>版本控制</h1>
+      <h1 v-text="title"></h1>
       <div class="article-info-box">
-        <span>2019年9月4日 23:04:36</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span v-text="createTime"></span>&nbsp;&nbsp;&nbsp;&nbsp;
         <span>阅读数 198</span>
       </div>
       <div id="id">
@@ -17,13 +17,17 @@
 export default {
   data() {
     return {
-     
+      title:null,
+      createTime:null,
+      hotValue:null
     };
   },
-   props:['psMsg'],
+  props:['psMsg'],
   mounted: function() {
+    var that = this;
+   console.log(localStorage.getItem("title"));
     let converter = new showdown.Converter();
-    let html = converter.makeHtml(this.psMsg.content);
+    let html = converter.makeHtml(that.psMsg.content);
     document.getElementById('id').innerHTML = html;
   }
 };
